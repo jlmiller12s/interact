@@ -23,6 +23,8 @@ import WorkflowConsole from "./pages/WorkflowConsole";
 import ClientCentral from "./pages/ClientCentral";
 import ClientDetail from "./pages/ClientDetail";
 import MarketBriefDetail from "./pages/MarketBriefDetail";
+import BuildAnalyzeAudiences from "./pages/BuildAnalyzeAudiences";
+import AudienceDetail from "./pages/AudienceDetail";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,8 @@ const App = () => (
                   <Route path="/briefs/:briefId/map" element={<BriefMapper />} />
                   <Route path="/plan" element={<PlanDetail />} />
                   <Route path="/audience-console" element={<AudienceConsole />} />
+                  <Route path="/audience-console/build-analyze" element={<BuildAnalyzeAudiences />} />
+                  <Route path="/audience-console/build-analyze/:audienceId" element={<AudienceDetail />} />
                   <Route path="/taxonomy-unifier" element={<TaxonomyUnifier />} />
                   <Route path="/project-module" element={<ProjectModule />} />
                   <Route path="/production-console" element={<ProductionConsole />} />

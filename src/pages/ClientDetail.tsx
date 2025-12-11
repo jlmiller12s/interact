@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from "react";
 import { InteractMasterLayout } from "@/components/InteractMasterLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
     Table,
     TableBody,
@@ -768,10 +770,7 @@ The project is intended for internal company use, primarily benefiting new hires
                                         </div>
 
                                         {/* Row 4 */}
-                                        <div className="space-y-2">
-                                            <label className="text-xs text-muted-foreground">Project URL</label>
-                                            <Input className="bg-white" />
-                                        </div>
+
                                         <div className="space-y-2">
                                             <label className="text-xs text-muted-foreground">Forecasted Budget</label>
                                             <div className="flex gap-2">
@@ -824,6 +823,36 @@ The project is intended for internal company use, primarily benefiting new hires
                                                 onChange={(e) => setBriefDescription(e.target.value)}
                                                 className="min-h-[150px] resize-none bg-white p-4"
                                             />
+                                            <div className="flex gap-6 mt-4">
+                                                <div className="flex items-center space-x-2">
+                                                    <Checkbox
+                                                        id="creative"
+                                                        checked={briefWorkstreams.includes("Creative")}
+                                                        onCheckedChange={(checked) => {
+                                                            if (checked) {
+                                                                setBriefWorkstreams([...briefWorkstreams, "Creative"]);
+                                                            } else {
+                                                                setBriefWorkstreams(briefWorkstreams.filter(w => w !== "Creative"));
+                                                            }
+                                                        }}
+                                                    />
+                                                    <Label htmlFor="creative" className="text-sm font-normal">Creative</Label>
+                                                </div>
+                                                <div className="flex items-center space-x-2">
+                                                    <Checkbox
+                                                        id="marketing"
+                                                        checked={briefWorkstreams.includes("Marketing")}
+                                                        onCheckedChange={(checked) => {
+                                                            if (checked) {
+                                                                setBriefWorkstreams([...briefWorkstreams, "Marketing"]);
+                                                            } else {
+                                                                setBriefWorkstreams(briefWorkstreams.filter(w => w !== "Marketing"));
+                                                            }
+                                                        }}
+                                                    />
+                                                    <Label htmlFor="marketing" className="text-sm font-normal">Marketing</Label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

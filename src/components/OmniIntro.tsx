@@ -89,7 +89,7 @@ export const OmniIntro = ({
               dominantBaseline="middle"
               className="omni-text"
             >
-              OMNICOM+
+              OMNI
             </text>
           </svg>
         </div>

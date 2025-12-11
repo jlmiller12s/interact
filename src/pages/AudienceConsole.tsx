@@ -9,13 +9,7 @@ import { MyProjectsTable } from "@/components/MyProjectsTable";
 const AudienceConsole = () => {
   return (
     <InteractMasterLayout
-      currentUser={{
-        name: "John Miller",
-        role: "project-owner",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-        tenantId: "bbdo",
-        tenantName: "BBDO (and its network including AMV BBDO, adam&eveDDB)",
-      }}
+
       activeCampaign={{
         id: "camp_001",
         name: "Q4 Product Launch",
@@ -33,15 +27,17 @@ const AudienceConsole = () => {
 
         {/* Top Action Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="hover:shadow-md transition-shadow cursor-pointer group">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Users className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                <span className="font-medium">Build & Analyze Audiences</span>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-            </CardContent>
-          </Card>
+          <Link to="/audience-console/build-analyze">
+            <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
+              <CardContent className="p-4 flex items-center justify-between h-full">
+                <div className="flex items-center gap-3">
+                  <Users className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <span className="font-medium">Build & Analyze Audiences</span>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </CardContent>
+            </Card>
+          </Link>
 
           <Card className="hover:shadow-md transition-shadow cursor-pointer group">
             <CardContent className="p-4 flex items-center justify-between">

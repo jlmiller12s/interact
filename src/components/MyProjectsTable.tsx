@@ -112,7 +112,7 @@ export function MyProjectsTable() {
             <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <CardTitle className="text-lg font-semibold">My Projects</CardTitle>
+                        <CardTitle className="text-lg font-semibold">My Tasks</CardTitle>
                         <span className="text-muted-foreground cursor-help">ⓘ</span>
                     </div>
                     <Button variant="ghost" size="icon" className="h-8 w-8">

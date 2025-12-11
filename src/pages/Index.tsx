@@ -18,6 +18,7 @@ import {
 import { InteractMasterLayout } from "@/components/InteractMasterLayout";
 import { useUser } from "@/context/UserContext";
 import { CustomizableProjectOwnerDashboard } from "@/components/dashboards/CustomizableProjectOwnerDashboard";
+import { MyProjectsTable } from "@/components/MyProjectsTable";
 import { CustomizableTaskOwnerDashboard } from "@/components/dashboards/CustomizableTaskOwnerDashboard";
 import { ApproverDashboard } from "@/components/dashboards/ApproverDashboard";
 import { EnhancedExecutiveDashboard } from "@/components/dashboards/EnhancedExecutiveDashboard";
@@ -107,42 +108,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle>Tasks</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {!workfrontConnected ? (
-                  <div className="flex flex-col items-center justify-center py-8">
-                    <p className="text-muted-foreground text-center mb-4">
-                      To access your tasks, connect to your Asana
-                    </p>
-                    <Button onClick={() => setWorkfrontConnected(true)} className="bg-blue-600 hover:bg-blue-700">
-                      Connect Asana
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="w-full">
-                    <div className="mb-3 flex items-center justify-between">
-                      <p className="text-sm text-muted-foreground">
-                        Connected to Asana
-                      </p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setWorkfrontConnected(false)}
-                      >
-                        Disconnect
-                      </Button>
-                    </div>
-                    {/* Placeholder for Asana View */}
-                    <div className="relative w-full h-[400px] border rounded-lg overflow-hidden bg-white flex items-center justify-center">
-                      <p className="text-gray-400">Asana Tasks View</p>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <MyProjectsTable />
           </div>
         );
       case "training-resources":

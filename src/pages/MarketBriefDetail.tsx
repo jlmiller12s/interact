@@ -184,14 +184,7 @@ export default function MarketBriefDetail() {
                                 <div className="bg-white dark:bg-[#1a1f2e] rounded-xl shadow-sm border p-6">
                                     <div className="flex items-center justify-between mb-6">
                                         <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Details</h3>
-                                        <Button
-                                            variant="outline"
-                                            className="gap-2 text-[#3b82f6] border-[#3b82f6] hover:bg-blue-50"
-                                            onClick={() => window.open("/omnify/", "_blank")}
-                                        >
-                                            View in Workfront
-                                            <ExternalLink className="h-4 w-4" />
-                                        </Button>
+
                                     </div>
 
                                     <div className="grid grid-cols-5 gap-8 mb-8">
