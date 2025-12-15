@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InteractMasterLayout } from "@/components/InteractMasterLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -199,9 +199,23 @@ const dummyProjects: Project[] = [
 ];
 
 const ProjectModule = () => {
+    const [projects, setProjects] = useState<Project[]>(dummyProjects);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+
+    // Load projects from local storage
+    useEffect(() => {
+        const localProjects = JSON.parse(localStorage.getItem("omnify_projects") || "[]");
+        if (localProjects.length > 0) {
+            setProjects(prev => {
+                // Avoid duplicates based on ID
+                const existingIds = new Set(prev.map(p => p.id));
+                const newProjects = localProjects.filter((p: Project) => !existingIds.has(p.id));
+                return [...prev, ...newProjects];
+            });
+        }
+    }, []);
 
     // Filter states
     const [statusFilters, setStatusFilters] = useState<string[]>([]);
@@ -226,11 +240,11 @@ const ProjectModule = () => {
     };
 
     // Derived data for filters
-    const statuses = Array.from(new Set(dummyProjects.map(p => p.status)));
-    const owners = Array.from(new Set(dummyProjects.map(p => p.owner)));
+    const statuses = Array.from(new Set(projects.map(p => p.status)));
+    const owners = Array.from(new Set(projects.map(p => p.owner)));
 
     // Filter logic
-    const filteredProjects = dummyProjects.filter(project => {
+    const filteredProjects = projects.filter(project => {
         const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             project.id.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilters.length === 0 || statusFilters.includes(project.status);
@@ -253,15 +267,7 @@ const ProjectModule = () => {
         : { "All": filteredProjects };
 
     return (
-        <InteractMasterLayout
-            currentUser={{
-                name: "John Miller",
-                role: "project-owner",
-                avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-                tenantId: "bbdo",
-                tenantName: "BBDO (and its network including AMV BBDO, adam&eveDDB)",
-            }}
-        >
+        <InteractMasterLayout>
             <div className="max-w-[1400px] mx-auto px-6 py-6 space-y-6">
                 <div className="flex items-center justify-between">
                     <div>

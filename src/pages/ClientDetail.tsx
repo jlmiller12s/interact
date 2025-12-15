@@ -25,6 +25,8 @@ import { initialClients, Client, MarketBrief } from "@/data/mockData";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { DatePickerWithRange } from "@/components/ui/date-picker-with-range";
+import { DateRange } from "react-day-picker";
 
 export default function ClientDetail() {
     const { clientId } = useParams();
@@ -40,7 +42,9 @@ export default function ClientDetail() {
     const [briefBudget, setBriefBudget] = useState("");
     const [briefGoal, setBriefGoal] = useState("");
     const [briefTeam, setBriefTeam] = useState("");
+
     const [briefWorkstreams, setBriefWorkstreams] = useState<string[]>([]);
+    const [briefDateRange, setBriefDateRange] = useState<DateRange | undefined>();
     const lastProcessedRef = useRef<string | null>(null);
     const lastDocProcessedRef = useRef<string | null>(null);
     const lastNameProcessedRef = useRef<string | null>(null);
@@ -191,6 +195,24 @@ The project is intended for internal company use, primarily benefiting new hires
                 timestamp: Date.now()
             });
             document.cookie = `omnify_create_projects_trigger=${encodeURIComponent(projectTriggerValue)}; path=/; max-age=60`;
+
+            // Sync with local Project Module
+            const newProject = {
+                id: `PRJ-${Math.floor(Math.random() * 10000)}`,
+                name: newBrief.name || "New Market Brief Project",
+                owner: "John Miller",
+                status: "Planning",
+                startDate: new Date().toISOString().split('T')[0],
+                dueDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                progress: 0,
+                description: briefDescription || "New project created from market brief.",
+                hoursLogged: 0,
+                totalHours: 100,
+                teamMembers: ["John Miller"]
+            };
+
+            const existingProjects = JSON.parse(localStorage.getItem("omnify_projects") || "[]");
+            localStorage.setItem("omnify_projects", JSON.stringify([...existingProjects, newProject]));
 
             console.log("Brief generated and sync trigger set:", newBrief.name);
 
@@ -746,17 +768,21 @@ The project is intended for internal company use, primarily benefiting new hires
 
                                         {/* Row 3 */}
                                         <div className="space-y-2">
-                                            <label className="text-xs text-muted-foreground">Date Range</label>
-                                            <div className="flex items-center gap-4">
-                                                <div className="relative flex-1">
-                                                    <Input placeholder="dd/mm/yy - dd/mm/yy" className="pl-9 bg-white" />
-                                                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-9 h-5 bg-slate-200 rounded-full relative cursor-pointer">
-                                                        <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm" />
+                                            <div className="space-y-2">
+                                                <label className="text-xs text-muted-foreground">Date Range</label>
+                                                <div className="flex items-center gap-4">
+                                                    <div className="relative flex-1">
+                                                        <DatePickerWithRange
+                                                            date={briefDateRange}
+                                                            setDate={setBriefDateRange}
+                                                        />
                                                     </div>
-                                                    <span className="text-sm text-slate-600">Always On</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-9 h-5 bg-slate-200 rounded-full relative cursor-pointer">
+                                                            <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm" />
+                                                        </div>
+                                                        <span className="text-sm text-slate-600">Always On</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -844,17 +870,17 @@ The project is intended for internal company use, primarily benefiting new hires
                                                 </div>
                                                 <div className="flex items-center space-x-2">
                                                     <Checkbox
-                                                        id="marketing"
-                                                        checked={briefWorkstreams.includes("Marketing")}
+                                                        id="media"
+                                                        checked={briefWorkstreams.includes("Media")}
                                                         onCheckedChange={(checked) => {
                                                             if (checked) {
-                                                                setBriefWorkstreams([...briefWorkstreams, "Marketing"]);
+                                                                setBriefWorkstreams([...briefWorkstreams, "Media"]);
                                                             } else {
-                                                                setBriefWorkstreams(briefWorkstreams.filter(w => w !== "Marketing"));
+                                                                setBriefWorkstreams(briefWorkstreams.filter(w => w !== "Media"));
                                                             }
                                                         }}
                                                     />
-                                                    <Label htmlFor="marketing" className="text-sm font-normal">Marketing</Label>
+                                                    <Label htmlFor="media" className="text-sm font-normal">Media</Label>
                                                 </div>
                                             </div>
                                         </div>
